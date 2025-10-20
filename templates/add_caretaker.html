@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Caretaker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1> Add New Caretaker</h1>
+      <nav>
+        <a href="/home" class="btn"> Home</a>
+        <a href="/caretakers" class="btn"> View Caretakers</a>
+      </nav>
+    </header>
+
+    <form method="POST" class="form-box">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" required>
+
+      <label for="gender">Gender:</label>
+      <select id="gender" name="gender" required>
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+
+      <button type="submit" class="btn save"> Save Caretaker</button>
+    </form>
+  </div>
+</body>
+</html>

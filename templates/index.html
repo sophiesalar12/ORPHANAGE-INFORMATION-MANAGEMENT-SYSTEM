@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | Orphanage Information Management System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #007bff;
+      --secondary: #6c63ff;
+      --background: #f5f8ff;
+      --card-bg: #ffffff;
+      --text-dark: #1e2a38;
+      --text-light: #6c757d;
+      --accent: linear-gradient(135deg, #6c63ff, #007bff);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--background);
+      color: var(--text-dark);
+    }
+
+
+    header {
+      background: var(--accent);
+      color: white;
+      padding: 40px 20px 60px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 0 0 40px 40px;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    header p {
+      font-size: 1rem;
+      margin-top: 10px;
+      color: #eaf2ff;
+    }
+
+    header a.logout-btn {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      background: white;
+      color: var(--primary);
+      font-weight: 600;
+      padding: 8px 15px;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    header a.logout-btn:hover {
+      background: #e6edff;
+    }
+
+
+    nav {
+      background: white;
+      padding: 10px 0;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: 500;
+      color: var(--text-dark);
+      padding: 8px 15px;
+      border-radius: 8px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    nav a:hover, nav a.active {
+      background: var(--accent);
+      color: white;
+    }
+
+.dashboard {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 40px 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 40px;
+  min-height: calc(100vh - 280px);
+  align-items: center;
+}
+
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+      padding: 25px 30px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+       ;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: var(--accent);
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+    .card h3 {
+      margin-top: 25px;
+      font-size: 1.4rem;
+      color: var(--primary);
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px 0;
+    }
+
+    .stat {
+      text-align: center;
+      background-color: #f1f4ff;
+      border-radius: 10px;
+      padding: 15px;
+      flex: 1;
+      margin: 0 6px;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--secondary);
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .btn {
+      flex: 1;
+      text-align: center;
+      text-decoration: none;
+      padding: 10px;
+      margin: 0 6px;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn.primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn.primary:hover {
+      opacity: 0.9;
+    }
+
+    .btn.secondary {
+      background: #e8ecf7;
+      color: var(--text-dark);
+    }
+
+    .btn.secondary:hover {
+      background: #d8def0;
+    }
+
+
+    footer {
+      background: var(--accent);
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 0.9rem;
+      margin-top: 60px;
+      border-radius: 20px 20px 0 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Welcome to Orphanage Information Management System</h1>
+    <p>Providing care, support, and data-driven management for every child.</p>
+    <a href="/logout" class="logout-btn">Logout</a>
+  </header>
+
+  <nav>
+    <a href="/home" class="active">Dashboard</a>
+    <a href="/children">Children</a>
+    <a href="/caretakers">Caretakers</a>
+  </nav>
+
+  <main class="dashboard">
+
+    <div class="card">
+      <h3>Children Overview</h3>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-number">{{ children_count if children_count is defined else '25' }}</div>
+          <div class="stat-label">Total Children</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">{{ new_children if new_children is defined else '3' }}</div>
+          <div class="stat-label">New This Month</div>
+        </div>
+      </div>
+      <p>View, update, and manage all child profiles, including personal details and assigned caretakers.</p>
+      <div class="btn-group">
+        <a href="/children" class="btn primary">View Children</a>
+        <a href="/add_child" class="btn secondary">Add New Child</a>
+      </div>
+    </div>
+
+
+    <div class="card">
+      <h3>Caretaker Management</h3>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-number">{{ caretakers_count if caretakers_count is defined else '8' }}</div>
+          <div class="stat-label">Total Caretakers</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">{{ caretaker_ratio if caretaker_ratio is defined else '3.1' }}</div>
+          <div class="stat-label">Child/Caretaker Ratio</div>
+        </div>
+      </div>
+      <p>Organize caretaker assignments and monitor their responsibilities and progress efficiently.</p>
+      <div class="btn-group">
+        <a href="/caretakers" class="btn primary">View Caretakers</a>
+        <a href="/add_caretaker" class="btn secondary">Add Caretaker</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Orphanage Information Management System | Empowering Care Through Technology
+  </footer>
+
+</body>
+</html>

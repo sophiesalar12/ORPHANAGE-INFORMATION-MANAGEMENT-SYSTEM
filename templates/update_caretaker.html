@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Caretaker Information</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #ffffff);
+            margin: 0;
+            padding: 0;
+        }
+        .form-container {
+            width: 50%;
+            margin: 50px auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+        label {
+            font-weight: 600;
+            display: block;
+            margin-top: 12px;
+            color: #34495e;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #3498db;
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            margin-top: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .back-link {
+            display: inline-block;
+            text-decoration: none;
+            background: #7f8c8d;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        .back-link:hover {
+            background: #636e72;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Update Caretaker Information</h2>
+        <form method="POST">
+            <label>Name:</label>
+            <input type="text" name="name" value="{{ caretaker['name'] }}" required>
+
+            <label>Age:</label>
+            <input type="number" name="age" value="{{ caretaker['age'] }}" required>
+
+            <label>Gender:</label>
+            <select name="gender" required>
+                <option value="Male" {% if caretaker['gender'] == 'Male' %}selected{% endif %}>Male</option>
+                <option value="Female" {% if caretaker['gender'] == 'Female' %}selected{% endif %}>Female</option>
+            </select>
+
+            <button type="submit"> Save Changes</button>
+        </form>
+        <a href="/caretakers" class="back-link">← Back to List</a>
+    </div>
+
+</body>
+</html>

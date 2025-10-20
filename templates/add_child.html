@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Child</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Add New Child</h1>
+      <nav>
+        <a href="/home" class="btn"> Home</a>
+        <a href="/children" class="btn"> View Children</a>
+      </nav>
+    </header>
+
+    <form method="POST" class="form-box">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" required>
+
+      <label for="gender">Gender:</label>
+      <select id="gender" name="gender" required>
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+
+      <label for="health_status">Health Status:</label>
+      <input type="text" id="health_status" name="health_status" required>
+
+      <label for="admission_date">Admission Date:</label>
+      <input type="date" id="admission_date" name="admission_date" required>
+
+      <label for="caretaker_id">Caretaker:</label>
+      <select id="caretaker_id" name="caretaker_id" required>
+        {% for c in caretakers %}
+          <option value="{{ c.Ct_id }}">{{ c.name }}</option>
+        {% endfor %}
+      </select>
+
+      <button type="submit" class="btn save"> Save Child</button>
+    </form>
+  </div>
+</body>
+</html>

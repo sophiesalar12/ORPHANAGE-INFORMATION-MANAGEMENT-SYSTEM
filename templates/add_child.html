@@ -2,20 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Add Child</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Child | Orphanage Information Management System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
+
+  <nav>
+    <div class="nav-container">
+      <a href="/home" class="logo">Orphanage Information Management System</a>
+      <div class="nav-links">
+        <a href="/home">Home</a>
+        <a href="/children" class="active">Manage Children</a>
+        <a href="/caretakers">Manage Caretakers</a>
+        <a href="/adopters">Manage Adopters</a>
+        <a href="/adoption" class=>Manage Adoptions</a>
+      </div>
+    </div>
+  </nav>
+
   <div class="container">
-    <header>
-      <h1>Add New Child</h1>
-      <nav>
-        <a href="/home" class="btn"> Home</a>
-        <a href="/children" class="btn"> View Children</a>
-      </nav>
-    </header>
+    <h1 class="text-center">Add New Child</h1>
+    <p class="subtitle text-center">Fill in the child’s details to register them into the system</p>
 
     <form method="POST" class="form-box">
+
       <label for="name">Name:</label>
       <input type="text" id="name" name="name" required>
 
@@ -30,7 +43,15 @@
       </select>
 
       <label for="health_status">Health Status:</label>
-      <input type="text" id="health_status" name="health_status" required>
+      <select id="health_status" name="health_status" required>
+        <option value="">Select Health Status</option>
+        <option value="Healthy">Healthy – child is in good health</option>
+        <option value="Minor Illness">Minor Illness – slight sickness (e.g., cough, cold)</option>
+        <option value="Sick">Sick – currently ill and needs attention</option>
+        <option value="Recovering">Recovering – was sick, but health is improving</option>
+        <option value="Under Medical Care">Under Medical Care – receiving treatment or medication</option>
+        <option value="Special Needs">Special Needs – has ongoing medical or developmental conditions</option>
+      </select>
 
       <label for="admission_date">Admission Date:</label>
       <input type="date" id="admission_date" name="admission_date" required>
@@ -42,8 +63,28 @@
         {% endfor %}
       </select>
 
-      <button type="submit" class="btn save"> Save Child</button>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="/children" class="btn btn-secondary">Cancel</a>
+      </div>
     </form>
   </div>
+
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="/home">Home</a>
+        <a href="/children">Children</a>
+        <a href="/caretakers">Caretakers</a>
+        <a href="/adopters">Adopters</a>
+        <a href="/adoption">Adoptions</a>
+      </div>
+      <p class="copyright">
+        &copy; 2025 Orphanage Information Management System. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
 </body>
 </html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adopters | Orphanage Information Management System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+
+  <nav>
+    <div class="nav-container">
+      <a href="/home" class="logo">Orphanage Information Management System</a>
+      <div class="nav-links">
+        <a href="/home">Home</a>
+        <a href="/children">Manage Children</a>
+        <a href="/caretakers">Manage Caretakers</a>
+        <a href="/adopters" class="active">Manage Adopters</a>
+        <a href="/adoption">Manage Adoptions</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <div class="container">
+    <h1 class="text-center">Adopter Management</h1>
+    <p class="subtitle text-center">View, manage, and update adopter information efficiently.</p>
+
+    <div class="mb-4">
+      <a href="/add_adopter" class="btn btn-secondary">+ Add New Adopter</a>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Gender</th>
+            <th>Age</th>
+            <th>Occupation</th>
+            <th>Contact</th>
+            <th>Status</th>
+            <th>Date Applied</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for adopter in adopters %}
+          <tr>
+            <td>{{ adopter.A_id }}</td>
+            <td>{{ adopter.full_name }}</td>
+            <td>{{ adopter.gender }}</td>
+            <td>{{ adopter.age }}</td>
+            <td>{{ adopter.occupation }}</td>
+            <td>{{ adopter.c_number }}</td>
+            <td>{{ adopter.status }}</td>
+            <td>{{ adopter.date_applied }}</td>
+            <td>
+              <div class="btn-group">
+                <a href="{{ url_for('view_adopter', id=adopter.A_id) }}" class="btn btn-info btn-sm">View</a>
+                <a href="{{ url_for('edit_adopter', id=adopter.A_id) }}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="/delete_adopter/{{ adopter.A_id }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this adopter?')">Delete</a>
+              </div>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="9" class="text-center">No adopters found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="/home">Home</a>
+        <a href="/children">Children</a>
+        <a href="/caretakers">Caretakers</a>
+        <a href="/adopters">Adopters</a>
+        <a href="/adoption">Adoptions</a>
+      </div>
+      <p class="copyright">&copy; 2025 Orphanage Information Management System. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

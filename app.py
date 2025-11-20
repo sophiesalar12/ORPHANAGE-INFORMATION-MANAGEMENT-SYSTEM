@@ -17,7 +17,6 @@ def get_db_connection():
     return conn
 
 
-
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -216,6 +215,208 @@ def delete_caretaker(id):
     conn.close()
     flash('Caretaker deleted successfully.', 'info')
     return redirect(url_for('caretakers'))
+
+
+
+
+@app.route('/adopters')
+@login_required
+def adopters():
+    conn = get_db_connection()
+    adopters = conn.execute('SELECT * FROM adopters').fetchall()
+    conn.close()
+    return render_template('adopter.html', adopters=adopters)
+
+
+@app.route('/add_adopter', methods=['GET', 'POST'])
+@login_required
+def add_adopter():
+    if request.method == 'POST':
+        full_name = request.form['full_name']
+        gender = request.form['gender']
+        dob = request.form['dob']
+        address = request.form['address']
+        c_number = request.form['c_number']
+        occupation = request.form['occupation']
+        m_status = request.form['m_status']
+        a_reason = request.form['a_reason']
+        date_applied = request.form['date_applied']
+        status = request.form['status']
+        age = request.form['age']
+
+        conn = get_db_connection()
+        conn.execute('''
+            INSERT INTO adopters (
+                full_name, gender, dob, address, c_number,
+                occupation, m_status, a_reason, date_applied,
+                status, age
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (full_name, gender, dob, address, c_number,
+              occupation, m_status, a_reason, date_applied,
+              status, age))
+        conn.commit()
+        conn.close()
+
+        flash('Adopter added successfully!')
+        return redirect(url_for('adopters'))
+    return render_template('add_adopter.html')
+
+
+@app.route('/view_adopter/<int:id>')
+@login_required
+def view_adopter(id):
+    conn = get_db_connection()
+    adopter = conn.execute('SELECT * FROM adopters WHERE A_id = ?', (id,)).fetchone()
+    conn.close()
+
+    if adopter is None:
+        flash('Adopter not found.', 'danger')
+        return redirect(url_for('adopters'))  # redirect back to adopter list
+
+    return render_template('view_adopter.html', adopter=adopter)
+
+
+@app.route('/edit_adopter/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_adopter(id):
+    conn = get_db_connection()
+    adopter = conn.execute('SELECT * FROM adopters WHERE A_id = ?', (id,)).fetchone()
+
+    if not adopter:
+        conn.close()
+        flash('Adopter not found.', 'danger')
+        return redirect(url_for('adopters'))
+
+    if request.method == 'POST':
+        full_name = request.form['full_name']
+        gender = request.form['gender']
+        dob = request.form['dob']
+        address = request.form['address']
+        c_number = request.form['c_number']
+        occupation = request.form['occupation']
+        m_status = request.form['m_status']
+        a_reason = request.form['a_reason']
+        status = request.form['status']
+        age = request.form['age']
+
+        conn.execute('''
+            UPDATE adopters
+            SET full_name = ?, gender = ?, dob = ?, address = ?, c_number = ?, 
+                occupation = ?, m_status = ?, a_reason = ?, status = ?, age = ?
+            WHERE A_id = ?
+        ''', (full_name, gender, dob, address, c_number, occupation, m_status, a_reason, status, age, id))
+        conn.commit()
+        conn.close()
+
+        flash('Adopter information updated successfully!', 'success')
+        return redirect(url_for('adopters'))
+
+    conn.close()
+    return render_template('edit_adopter.html', adopter=adopter)
+
+
+@app.route('/delete_adopter/<int:id>')
+@login_required
+def delete_adopter(id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM adopters WHERE A_id = ?', (id,))
+    conn.commit()
+    conn.close()
+    flash('Adopter deleted successfully.', 'info')
+    return redirect(url_for('adopters'))
+
+
+
+@app.route('/adoption')
+@login_required
+def adoptions():
+    conn = get_db_connection()
+    adoptions = conn.execute('''
+        SELECT ad.Ad_id, ad.adoption_date, ad.status,
+               a.full_name AS adopter_name, c.name AS child_name
+        FROM adoptions ad
+        JOIN adopters a ON ad.A_id = a.A_id
+        JOIN children c ON ad.Ch_id = c.Ch_id
+    ''').fetchall()
+    conn.close()
+    return render_template('adoption.html', adoptions=adoptions)
+
+
+@app.route('/add_adoption', methods=['GET', 'POST'])
+@login_required
+def add_adoption():
+    conn = get_db_connection()
+    adopters = conn.execute('SELECT * FROM adopters').fetchall()
+    children = conn.execute('SELECT * FROM children').fetchall()
+
+    if request.method == 'POST':
+        adopter_id = request.form['adopter_id']
+        child_id = request.form['child_id']
+        adoption_date = request.form['adoption_date']
+        status = 'Approved'
+
+        conn.execute('''
+            INSERT INTO adoptions (A_id, Ch_id, adoption_date, status)
+            VALUES (?, ?, ?, ?)
+        ''', (adopter_id, child_id, adoption_date, status))
+        conn.commit()
+        conn.close()
+
+        flash('Adoption record created successfully!', 'success')
+        return redirect(url_for('adoptions'))
+
+    conn.close()
+    return render_template('add_adoption.html', adopters=adopters, children=children)
+
+
+
+@app.route('/delete_adoption/<int:id>')
+@login_required
+def delete_adoption(id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM adoptions WHERE Ad_id = ?', (id,))
+    conn.commit()
+    conn.close()
+    flash('Adoption record deleted successfully.', 'info')
+    return redirect(url_for('adoptions'))
+
+
+@app.route('/edit_adoption/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_adoption(id):
+    conn = get_db_connection()
+    adoption = conn.execute('''
+        SELECT ad.Ad_id, ad.A_id, ad.Ch_id, ad.adoption_date, ad.status,
+               a.full_name AS adopter_name,
+               c.name AS child_name
+        FROM adoptions ad
+        JOIN adopters a ON ad.A_id = a.A_id
+        JOIN children c ON ad.Ch_id = c.Ch_id
+        WHERE ad.Ad_id = ?
+    ''', (id,)).fetchone()
+
+    if not adoption:
+        conn.close()
+        flash('Adoption record not found.', 'danger')
+        return redirect(url_for('adoptions'))
+
+    if request.method == 'POST':
+        adoption_date = request.form['adoption_date']
+        status = request.form['status']
+
+        conn.execute('''
+            UPDATE adoptions
+            SET adoption_date = ?, status = ?
+            WHERE Ad_id = ?
+        ''', (adoption_date, status, id))
+        conn.commit()
+        conn.close()
+
+        flash('Adoption record updated successfully!', 'success')
+        return redirect(url_for('adoptions'))
+
+    conn.close()
+    return render_template('edit_adoption.html', adoption=adoption)
 
 
 

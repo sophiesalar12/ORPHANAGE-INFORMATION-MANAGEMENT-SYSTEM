@@ -1,4 +1,4 @@
-/* ====== GLOBAL STYLES ====== */
+
 :root {
   --primary: #6366f1;
   --primary-dark: #4f46e5;
@@ -27,14 +27,14 @@ body {
   line-height: 1.6;
 }
 
-/* Page container for consistent spacing */
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
 }
 
-/* ====== HEADER ====== */
+
 h1, h2, h3 {
   font-weight: 700;
   line-height: 1.2;
@@ -60,11 +60,11 @@ h3 {
   font-size: 1.1rem;
 }
 
-/* ====== NAVIGATION ====== */
+
 nav {
   background-color: var(--bg-white);
   box-shadow: var(--shadow);
-  padding: 1rem 0;
+  padding: 1rem 2rem;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -76,19 +76,21 @@ nav {
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  white-space: nowrap;
 }
 
 .logo {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--primary);
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .nav-links {
   display: flex;
-  gap: 1.5rem;
+  align-items: center;
+  gap: 2rem;
 }
 
 nav a {
@@ -100,12 +102,19 @@ nav a {
   transition: var(--transition);
 }
 
-nav a:hover, nav a.active {
+nav a:hover {
   background-color: var(--primary);
   color: white;
 }
 
-/* ====== HERO SECTION ====== */
+nav a.active {
+  background-color: var(--primary-dark);
+  color: white;
+  font-weight: 600;
+}
+
+
+
 .hero {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white;
@@ -127,7 +136,7 @@ nav a:hover, nav a.active {
   opacity: 0.9;
 }
 
-/* ====== CARDS ====== */
+
 .card {
   background: var(--bg-white);
   border-radius: var(--radius);
@@ -148,7 +157,7 @@ nav a:hover, nav a.active {
   gap: 1.5rem;
 }
 
-/* ====== TABLE DESIGN ====== */
+
 .table-container {
   overflow-x: auto;
   margin: 2rem 0;
@@ -184,7 +193,7 @@ tr:hover {
   background: rgba(99, 102, 241, 0.05);
 }
 
-/* ====== BUTTONS ====== */
+
 .btn {
   display: inline-block;
   background: var(--primary);
@@ -238,7 +247,7 @@ tr:hover {
   gap: 0.5rem;
 }
 
-/* ====== FORM DESIGN ====== */
+
 .form-container {
   background: var(--bg-white);
   max-width: 600px;
@@ -282,7 +291,7 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
-/* ====== FOOTER ====== */
+
 footer {
   background: var(--text);
   color: white;
@@ -318,7 +327,7 @@ footer {
   font-size: 0.9rem;
 }
 
-/* ====== UTILITIES ====== */
+
 .text-center {
   text-align: center;
 }
@@ -335,7 +344,7 @@ footer {
 .mb-4 { margin-bottom: 2rem; }
 .mb-5 { margin-bottom: 3rem; }
 
-/* ====== RESPONSIVE DESIGN ====== */
+
 @media (max-width: 768px) {
   .nav-container {
     flex-direction: column;
@@ -360,7 +369,7 @@ footer {
   }
 }
 
-/* ====== ANIMATIONS ====== */
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }

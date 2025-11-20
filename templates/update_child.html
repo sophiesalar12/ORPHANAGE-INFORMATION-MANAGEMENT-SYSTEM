@@ -1,107 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Child Information</title>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #e0f7fa, #ffffff);
-            margin: 0;
-            padding: 0;
-        }
-        .form-container {
-            width: 50%;
-            margin: 50px auto;
-            background: #fff;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-        h2 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 25px;
-        }
-        label {
-            font-weight: 600;
-            display: block;
-            margin-top: 12px;
-            color: #34495e;
-        }
-        input, select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 6px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            font-size: 14px;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #3498db;
-            color: white;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            margin-top: 25px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        button:hover {
-            background: #2980b9;
-        }
-        .back-link {
-            display: inline-block;
-            text-decoration: none;
-            background: #7f8c8d;
-            color: white;
-            padding: 10px 18px;
-            border-radius: 8px;
-            margin-top: 20px;
-            transition: 0.3s;
-        }
-        .back-link:hover {
-            background: #636e72;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Child | Orphanage Information Management System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-    <div class="form-container">
-        <h2>Update Child Information</h2>
-        <form method="POST">
-            <label>Name:</label>
-            <input type="text" name="name" value="{{ child['name'] }}" required>
-
-            <label>Age:</label>
-            <input type="number" name="age" value="{{ child['age'] }}" required>
-
-            <label>Gender:</label>
-            <select name="gender" required>
-                <option value="Male" {% if child['gender'] == 'Male' %}selected{% endif %}>Male</option>
-                <option value="Female" {% if child['gender'] == 'Female' %}selected{% endif %}>Female</option>
-            </select>
-
-            <label>Health Status:</label>
-            <input type="text" name="health_status" value="{{ child['health_status'] }}">
-
-            <label>Admission Date:</label>
-            <input type="date" name="admission_date" value="{{ child['admission_date'] }}">
-
-            <label>Caretaker:</label>
-            <select name="caretaker_id" required>
-                {% for c in caretakers %}
-                    <option value="{{ c['Ct_id'] }}" {% if c['Ct_id'] == child['caretaker_id'] %}selected{% endif %}>{{ c['name'] }}</option>
-                {% endfor %}
-            </select>
-
-            <button type="submit"> Save Changes</button>
-        </form>
-        <a href="/children" class="back-link">← Back to List</a>
+  <nav>
+    <div class="nav-container">
+      <a href="/home" class="logo">Orphanage Information Management System</a>
+      <div class="nav-links">
+        <a href="/home">Home</a>
+        <a href="/children" class="active">Manage Children</a>
+        <a href="/caretakers">Manage Caretakers</a>
+        <a href="/adopters">Manage Adopters</a>
+        <a href="/adoption" class=>Manage Adoptions</a>
+      </div>
     </div>
+  </nav>
+
+
+  <div class="container">
+    <h1 class="text-center">Update Child Information</h1>
+    <p class="subtitle text-center">Edit the details of this child</p>
+
+    <div class="form-box">
+      <form action="/update_child/{{ child.Ch_id }}" method="POST">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" value="{{ child.name }}" required>
+        </div>
+
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input type="number" id="age" name="age" value="{{ child.age }}" required>
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select id="gender" name="gender" required>
+            <option value="Male" {% if child.gender == 'Male' %}selected{% endif %}>Male</option>
+            <option value="Female" {% if child.gender == 'Female' %}selected{% endif %}>Female</option>
+          </select>
+        </div>
+
+
+        <div class="form-group">
+          <label for="health_status">Health Status</label>
+          <select id="health_status" name="health_status" required>
+            <option value="Healthy" {% if child.health_status == 'Healthy' %}selected{% endif %}>Healthy – child is in good health</option>
+            <option value="Minor Illness" {% if child.health_status == 'Minor Illness' %}selected{% endif %}>Minor Illness – slight sickness (e.g., cough, cold)</option>
+            <option value="Sick" {% if child.health_status == 'Sick' %}selected{% endif %}>Sick – currently ill and needs attention</option>
+            <option value="Recovering" {% if child.health_status == 'Recovering' %}selected{% endif %}>Recovering – was sick, but health is improving</option>
+            <option value="Under Medical Care" {% if child.health_status == 'Under Medical Care' %}selected{% endif %}>Under Medical Care – receiving treatment or medication</option>
+            <option value="Special Needs" {% if child.health_status == 'Special Needs' %}selected{% endif %}>Special Needs – has ongoing medical or developmental conditions</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="admission_date">Admission Date</label>
+          <input type="date" id="admission_date" name="admission_date" value="{{ child.admission_date }}" required>
+        </div>
+
+        <div class="form-group">
+          <label for="caretaker">Assigned Caretaker</label>
+          <select id="caretaker" name="caretaker_id">
+            <option value="">-- Select Caretaker --</option>
+            {% for caretaker in caretakers %}
+              <option value="{{ caretaker.Ct_id }}" {% if caretaker.Ct_id == child.caretaker_id %}selected{% endif %}>
+                {{ caretaker.name }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Update Child</button>
+          <a href="/children" class="btn btn-secondary">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="/home">Home</a>
+        <a href="/children">Children</a>
+        <a href="/caretakers">Caretakers</a>
+        <a href="/adopters">Adopters</a>
+        <a href="/adoption">Adoptions</a>
+      </div>
+      <p class="copyright">
+        &copy; 2025 Orphanage Information Management System. All rights reserved.
+      </p>
+    </div>
+  </footer>
 
 </body>
 </html>

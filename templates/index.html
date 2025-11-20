@@ -94,10 +94,10 @@
   margin: 30px auto;
   padding: 40px 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 40px;
   min-height: calc(100vh - 280px);
-  align-items: center;
+  align-items: start;
 }
 
 
@@ -135,31 +135,7 @@
       color: var(--primary);
     }
 
-    .stats {
-      display: flex;
-      justify-content: space-between;
-      margin: 20px 0;
-    }
 
-    .stat {
-      text-align: center;
-      background-color: #f1f4ff;
-      border-radius: 10px;
-      padding: 15px;
-      flex: 1;
-      margin: 0 6px;
-    }
-
-    .stat-number {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--secondary);
-    }
-
-    .stat-label {
-      font-size: 0.9rem;
-      color: var(--text-light);
-    }
 
     .card p {
       font-size: 0.95rem;
@@ -226,22 +202,14 @@
     <a href="/home" class="active">Dashboard</a>
     <a href="/children">Children</a>
     <a href="/caretakers">Caretakers</a>
+    <a href="/adopters">Adopters</a>
+    <a href="/adoption">Adoption</a>
   </nav>
 
   <main class="dashboard">
 
     <div class="card">
-      <h3>Children Overview</h3>
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-number">{{ children_count if children_count is defined else '25' }}</div>
-          <div class="stat-label">Total Children</div>
-        </div>
-        <div class="stat">
-          <div class="stat-number">{{ new_children if new_children is defined else '3' }}</div>
-          <div class="stat-label">New This Month</div>
-        </div>
-      </div>
+      <h3>Children </h3>
       <p>View, update, and manage all child profiles, including personal details and assigned caretakers.</p>
       <div class="btn-group">
         <a href="/children" class="btn primary">View Children</a>
@@ -251,24 +219,36 @@
 
 
     <div class="card">
-      <h3>Caretaker Management</h3>
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-number">{{ caretakers_count if caretakers_count is defined else '8' }}</div>
-          <div class="stat-label">Total Caretakers</div>
-        </div>
-        <div class="stat">
-          <div class="stat-number">{{ caretaker_ratio if caretaker_ratio is defined else '3.1' }}</div>
-          <div class="stat-label">Child/Caretaker Ratio</div>
-        </div>
-      </div>
+      <h3>Caretakers</h3>
       <p>Organize caretaker assignments and monitor their responsibilities and progress efficiently.</p>
       <div class="btn-group">
         <a href="/caretakers" class="btn primary">View Caretakers</a>
         <a href="/add_caretaker" class="btn secondary">Add Caretaker</a>
       </div>
     </div>
+
+
+    <div class="card">
+      <h3>Adoption Records</h3>
+      <p>Monitor all adoption records, including adopter details, assigned children, and adoption dates.</p>
+      <div class="btn-group">
+        <a href="/adoption" class="btn primary">View Adoptions</a>
+        <a href="/add_adoption" class="btn secondary">Add Adoption</a>
+      </div>
+    </div>
+
+
+    <div class="card">
+      <h3>Adopters</h3>
+      <p>Keep track of all registered adopters and their applications for child adoption.</p>
+      <div class="btn-group">
+        <a href="/adopters" class="btn primary">View Adopters</a>
+        <a href="/add_adopter" class="btn secondary">Add New Adopter</a>
+      </div>
+    </div>
   </main>
+
+
 
   <footer>
     © 2025 Orphanage Information Management System | Empowering Care Through Technology
